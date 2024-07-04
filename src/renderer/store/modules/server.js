@@ -44,7 +44,7 @@ export const actions = {
         let files = await fs.getFilesFromBasePath(path, scan_subdir)
 
         console.log("::store | patched files", files.length)
-        console.log(files)
+        // console.log(files)
         commit('serverFiles', files)
         // commit('loading', false)
     },

@@ -115,11 +115,8 @@ let o = {
 
     async createItem(item, folder=''){
         // console.log("Create Item", item)
-
         const shouldPrefix  = store.getters['app/getPrefixFullPath']
         const readSFOHeader = store.getters['app/getReadSFOHeader']
-
-        console.log({ readSFOHeader })
 
         // console.log(":: fs | Create File Item", item)
         let isFile = this.isFile(item)
@@ -146,8 +143,6 @@ let o = {
         let cusa = searchCUSA ? searchCUSA[0].toUpperCase() : ''
 
         // #todo get pkg deep info with https://github.com/dexter85/ps4-pkg-info
-
-
         let sfoKeys = ['APP_TYPE', 'APP_VER', 'ATTRIBUTE', 'ATTRIBUTE2', 'CATEGORY', 'CONTENT_ID', 'PUBTOOLINFO', 'PUBTOOLMINVER', 'PUBTOOLVER', 'SYSTEM_VER', 'TITLE', 'TITLE_ID', 'VERSION']
         let sfo = { readSFOHeader }
         let image = null
@@ -160,7 +155,7 @@ let o = {
                     })            
 
                 if( s ){
-                    console.log("Found sfo header for " + fileName)
+                    // console.log("Found sfo header for " + fileName)
                     // image = s.icon0Raw
                     cusa  = s.paramSfo.TITLE_ID
                     sfoKeys.forEach( x => sfo[x] = s.paramSfo[x] )            

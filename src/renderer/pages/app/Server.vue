@@ -36,6 +36,7 @@ import Logs from './components/Logs'
 import Files from './components/Files'
 import Debug from './components/Debug'
 import Routes from './components/Routes'
+import { getPs4PkgInfo } from "@njzy/ps4-pkg-info"
 
 export default {
     name: 'Server',
@@ -277,6 +278,10 @@ export default {
                 response.status(200).download(file.path, file.name)
             })
 
+            // add Image callback to file as ${file}/icon0.png
+            this.host.router.get(`/${file.patchedFilename}/icon0.png`, async (request, response) => await this.fileImageCallbackResponse(file, request, response) )
+
+            // Validate a couple states
             let inQueue = this.$store.getters['queue/isInQueue'](file)
             let isInstalled = this.$store.getters['queue/isInstalled'](file)
 
@@ -290,6 +295,29 @@ export default {
               file.status = 'installed'
 
             return file
+        },
+
+        async fileImageCallbackResponse(file, request, response){
+            let image = null
+            try {
+                let s = await getPs4PkgInfo(file.path, { generateBase64Icon: true })
+                    .catch( e => {
+                        console.error("Error in PKG Extraction: "+ e + '; File: ' + fileName)
+                        throw e
+                    })            
+
+                const image = s.icon0Raw;
+                response.writeHead(200, { 'Content-Type': 'image/png' });
+                response.end(image, 'binary');
+                response.status(200).json(s)
+            }
+            catch (e){
+                console.error(e)
+                response.status(404).json({
+                    error: e,
+                    time: (new Date).valueOf()
+                })
+            }
         },
 
         checkHeathbeat(){
