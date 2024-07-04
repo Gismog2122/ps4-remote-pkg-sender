@@ -87,9 +87,10 @@ export default {
         ps4Apps: [
             { value: 'PS4 RPI (flatZ)', key: 'rpi', disabled: false },
             { value: 'PS4 RPI (OOP)', key: 'rpiOOP', disabled: false },
+            { value: 'PS4 GoldHEN', key: 'goldhen', disabled: false },
+            { value: 'PS5 etaHEN', key: 'etaHEN', disabled: false },
             { value: 'PS4 IPI', key: 'ipi', disabled: true },
             { value: 'PS4 HB-Store', key: 'hbstore', disabled: true },
-            { value: 'PS5 etaHEN', key: 'etaHEN', disabled: false },
         ]
     }},
 
@@ -110,6 +111,11 @@ export default {
             if(val == 'etaHEN'){
                 this.ps4.port = this.ps4.port_etaHEN ?? 9090
                 this.server.enableQueueScanner = false
+            }
+
+            if(val == 'goldhen'){
+                this.ps4.port = this.ps4.port_goldhen ?? 9090
+                this.server.enableQueueScanner = false                
             }
 
             this.save()

@@ -38,6 +38,7 @@ export const state = {
         port_rpiOOP: 12800,
         port_ftp: 2121,
         port_etaHEN: 9090,
+        port_goldhen: 9090,
         timeout: 2500,
         update: 2200,
     },
