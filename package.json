@@ -43,6 +43,7 @@
     "webpack": "~4.42.1"
   },
   "dependencies": {
+    "@njzy/ps4-pkg-info": "^0.1.0",
     "axios": "^0.24.0",
     "debounce": "^1.2.1",
     "express": "^4.17.1",
@@ -60,7 +61,7 @@
     "plugins": [
       "@babel/plugin-proposal-nullish-coalescing-operator"
     ]
-  },  
+  },
   "build": {
     "appId": "gkiokan.net.ps4remotepkgsenderv2",
     "asar": true,

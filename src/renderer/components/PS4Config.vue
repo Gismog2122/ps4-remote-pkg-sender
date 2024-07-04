@@ -115,7 +115,8 @@ export default {
 
             if(val == 'goldhen'){
                 this.ps4.port = this.ps4.port_goldhen ?? 9090
-                this.server.enableQueueScanner = false                
+                this.server.enableQueueScanner = false     
+                this.server.readSFOHeader = true           
             }
 
             this.save()

@@ -77,6 +77,11 @@
               <el-checkbox v-model="server.enableQueueScanner"> Enable Queue Scanner to automatically start the next install process on the Queue</el-checkbox>
           </el-form-item>
       </div>
+      <div>
+          <el-form-item label="Read SFO Header">
+              <el-checkbox v-model="server.readSFOHeader" :disabled="ps4.app == 'goldhen'"> Read SFO Header of each PKG and show PKG Information </el-checkbox>
+          </el-form-item>
+      </div>      
 
   </el-form>
   </div>
@@ -116,6 +121,7 @@ export default {
     },
 
     computed: {
+        ps4: sync('app/ps4'),
         server: get('app/server'),
         status: get('server/status'),
     },

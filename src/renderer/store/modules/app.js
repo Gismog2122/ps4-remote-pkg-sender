@@ -27,6 +27,7 @@ export const state = {
         scan_subdir: false,
         prependFullPath: false,
         enableQueueScanner: false,
+        readSFOHeader: false,
     },
 
     ps4: {
