@@ -9,6 +9,14 @@ import store from './../renderer/store/index.js'
 
 // import './crashReporter'
 
+// prepatch 
+console.log("Plattform Check " + process.platform)
+if (process.platform === "linux") {
+  console.log("Apply --no-sandbox to commandline to fix Linux (debian) graphical issues")
+  console.log("More Info: https://github.com/Gkiokan/ps4-remote-pkg-sender/issues/76#issuecomment-2127757683")
+  app.commandLine.appendSwitch("no-sandbox");
+}
+
 // set vars
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
