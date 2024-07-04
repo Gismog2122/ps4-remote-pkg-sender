@@ -118,12 +118,12 @@ html.dark {
         background-color: transparent;
     }
 
-    .el-table .el-table__cell,
+    .el-table .el-table__cell
     {
         border-color: $border-color !important;
 
         &.is-leaf {
-            bordr-bottom: 1px solid $border-color !important;
+            border-bottom: 1px solid $border-color !important;
         }
     }
 
@@ -229,9 +229,9 @@ html.dark {
             }
         }
 
-        .popper_arrow {
-            // border-color: transparent !important;
-        }
+        // .popper_arrow {
+        //     // border-color: transparent !important;
+        // }
     }
 
     // Dialog Popup
@@ -256,4 +256,25 @@ html.dark {
         }
     }
 
+}
+
+
+// darkmode fix
+html.dark {
+    .top {
+        .el-button--info {
+            background-color: #333 !important;
+            // border-color: #909399 !important;
+        }
+    }
+}
+
+// pureblack fix
+html.pureblack {
+    .top {
+        .el-button--info {
+            background-color: #1a1a1a !important;
+            // border-color: #909399 !important;
+        }
+    }
 }

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="ProcessView">
 
   <el-row style="margin-bottom: 20px;">
     <el-col :span="20">
@@ -37,7 +37,7 @@
   </el-row>
 
 
-  <el-table :data="files" v-loading="loading"
+  <el-table :data="files" v-loading="loading" class="file"
       element-loading-text="Loading Server files"
       element-loading-spinner="el-icon-loading"
       element-loading-background="rgba(255, 255, 255, 0.8)"
@@ -83,6 +83,11 @@
         </template>
       </el-table-column>
 
+        <el-table-column label="Cover" width="100">
+            <template slot-scope="scope">
+                <div class='image' :style="{ backgroundImage: 'url('+scope.row.image+')' }" />
+            </template>
+        </el-table-column>        
 
       <el-table-column prop="name" label="Name"></el-table-column>
 

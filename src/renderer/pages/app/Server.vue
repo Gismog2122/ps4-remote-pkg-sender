@@ -285,7 +285,8 @@ export default {
             let inQueue = this.$store.getters['queue/isInQueue'](file)
             let isInstalled = this.$store.getters['queue/isInstalled'](file)
 
-            file.url = 'http://' + this.ip + ':' + this.port + '/' + file.patchedFilename
+            file.url    = 'http://' + this.ip + ':' + this.port + '/' + file.patchedFilename
+            file.image  = file.url + '/icon0.png'
             file.status = 'serving'
 
             if(inQueue)
@@ -309,7 +310,6 @@ export default {
                 const image = s.icon0Raw;
                 response.writeHead(200, { 'Content-Type': 'image/png' });
                 response.end(image, 'binary');
-                response.status(200).json(s)
             }
             catch (e){
                 console.error(e)
