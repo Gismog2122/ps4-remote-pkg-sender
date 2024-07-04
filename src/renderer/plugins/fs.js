@@ -1,48 +1,47 @@
 import Vue from 'vue'
 import fs from 'fs'
+import { promises as fs_ } from 'fs'
 import path from 'path'
 import store from './../store'
+import { getPs4PkgInfo } from "@njzy/ps4-pkg-info"
 
-// const shouldPrefix  = store.getters['app/getPrefixFullPath']
-
-const getFiles = (folder, deep=false) => {
-    const files = []
+const getFiles = (folder, deep = false) => {
+    const files = [];
 
     try {
-        for (const fileObject of fs.readdirSync(folder, { withFileTypes: true }) ) {
+        const fileObjects = fs.readdirSync(folder, { withFileTypes: true });
 
-            // fix for new path ?
-            let file = fileObject.name
+        for (const fileObject of fileObjects) {
+            const file = fileObject.name;
 
-            // fix permission error on external drives for darwin
-            let forbidden = ['$RECYCLE.BIN', 'desktop.ini', '.Spotlight', '.Spotlight-V100', '.Trashes', '.Trash', 'Thumbs.db', '.DS_Store'].includes(file)
+            const forbidden = ['$RECYCLE.BIN', 'desktop.ini', '.Spotlight', '.Spotlight-V100', '.Trashes', '.Trash', 'Thumbs.db', '.DS_Store'].includes(file);
 
-            if(forbidden){
-                continue
+            if (forbidden) {
+                continue;
             }
 
-            // console.log("Reading File " + JSON.stringify(file))
+            const fullPath = path.join(folder, file);
 
-            const fullPath = path.join(folder, file)
-            if(fs.lstatSync(fullPath).isDirectory() && deep){
-                getFiles(fullPath, deep).forEach( x => files.push(x) )
-            }
-            else {
-                files.push(fullPath)
+            if (fileObject.isDirectory() && deep) {
+                const nestedFiles = getFiles(fullPath, deep);
+                files.push(...nestedFiles);
+            } else {
+                files.push(fullPath);
             }
         }
-    }
-    catch( e ){
-        console.log("Error reading folder", folder)
-        console.log(e)
+    } catch (e) {
+        console.log("Error reading folder", folder);
+        console.log(e);
     }
 
-    return files
-}
+    console.log("Found " + files.length + " Files");
+
+    return files;
+};
 
 let o = {
 
-    getFilesFromBasePath(folder='', scan_subdir=false){
+    async getFilesFromBasePath(folder='', scan_subdir=false){
         if(!folder){
             console.log("::fs | No base_path given for the server.")
             return
@@ -51,11 +50,14 @@ let o = {
         console.log("Loading Files from Subdirectory", scan_subdir)
         console.log("Loading Directory files in ", folder)
 
-        return getFiles(folder, scan_subdir)
+        let files = (await getFiles(folder, scan_subdir))
             .filter( file => this.isPKG(file) )
             .map( item => this.createItem(item, folder) )
 
+        files = await Promise.all(files)
+
         console.log("Found files " + files.length)
+
         return files
     },
 
@@ -84,11 +86,11 @@ let o = {
               // .filter( item => item.includes('.pkg') )
               // .filter( item => this.isFile(item) )
               .forEach((file) => {
-                  let filepath = path.join(folder, file);
+                  let filePath = path.join(folder, file);
                   let fullPath = path.resolve(folder, file)
-                  let isDir    = fs.lstatSync(filepath).isDirectory()
+                  let isDir    = fs_.lstatSync(filepath).isDirectory()
 
-                  console.log(fullpath, filePath)
+                  console.log(fullPath, filePath)
 
                   if(isDir){
                     console.log("Found directory", fullPath)
@@ -111,8 +113,13 @@ let o = {
         return path.extname(item).includes('pkg')
     },
 
-    createItem(item, folder=''){
+    async createItem(item, folder=''){
+        // console.log("Create Item", item)
+
         const shouldPrefix  = store.getters['app/getPrefixFullPath']
+        const readSFOHeader = store.getters['app/getReadSFOHeader']
+
+        console.log({ readSFOHeader })
 
         // console.log(":: fs | Create File Item", item)
         let isFile = this.isFile(item)
@@ -140,10 +147,38 @@ let o = {
 
         // #todo get pkg deep info with https://github.com/dexter85/ps4-pkg-info
 
+
+        let sfoKeys = ['APP_TYPE', 'APP_VER', 'ATTRIBUTE', 'ATTRIBUTE2', 'CATEGORY', 'CONTENT_ID', 'PUBTOOLINFO', 'PUBTOOLMINVER', 'PUBTOOLVER', 'SYSTEM_VER', 'TITLE', 'TITLE_ID', 'VERSION']
+        let sfo = { readSFOHeader }
+        let image = null
+
+        if( readSFOHeader ){
+            try {
+                let s = await getPs4PkgInfo(item, { generateBase64Icon: false })
+                    .catch( e => {
+                        console.error("Error in PKG Extraction: "+ e + '; File: ' + fileName)
+                    })            
+
+                if( s ){
+                    console.log("Found sfo header for " + fileName)
+                    // image = s.icon0Raw
+                    cusa  = s.paramSfo.TITLE_ID
+                    sfoKeys.forEach( x => sfo[x] = s.paramSfo[x] )            
+                    
+                    // image = `data:image/png;base64,` + s.icon0Raw.toString('base64')
+                    // console.log(item, s.paramSfo)
+                    // console.log(image)                
+                }
+            }
+            catch (e){
+                console.error(e)
+            }
+        }
+
         // title location 0x40 to 0x63
         // cusa location 0x47 to 0x4F
 
-        return {
+        let finalItem = {
             name: fileName,
             status: 'n/a',
             percentage: 0,
@@ -159,8 +194,13 @@ let o = {
             sizeInBytes: stats.size,
             size,
             logs: [],
+            sfo,
+            image,
             // stats,
         }
+
+        // console.log(finalItem)
+        return finalItem
     },
 
     createItemFromHBLegacy(item, root=''){

@@ -39,7 +39,7 @@
           <template slot-scope="scope">
               <el-tag size="small" type="info" style="margin-bottom: 3px;"> Path: {{ scope.row.path }} </el-tag> <br>
               <el-tag size="small" type="info"> URL: {{ scope.row.url }} </el-tag> <br>
-              <pre v-if="false">{{ scope.row }}</pre>
+              <pre v-if="true">{{ scope.row }}</pre>
           </template>
         </el-table-column>
 
@@ -90,7 +90,7 @@
 
     <template class='file_list' v-if="debug">
         <pre>{{ server.base_path }}</pre>
-        <pre>{{ files }}</pre>
+        <pre>{{ files }}</pre>
     </template>
 
 </div>
@@ -110,7 +110,7 @@ export default {
 
     data(){ return {
         // files: [],
-        debug: false,
+        debug: true,
         showExtension: false,
         showCUSA: true,
         showVersion: false,

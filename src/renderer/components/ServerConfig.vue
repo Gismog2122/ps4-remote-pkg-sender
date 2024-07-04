@@ -150,6 +150,10 @@ export default {
         'server.enableQueueScanner'(){
             this.save()
         },
+        'server.readSFOHeader'(){
+            this.save()
+            this.loadFiles()
+        }
     },
 
     methods: {

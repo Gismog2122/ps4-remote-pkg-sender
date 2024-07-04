@@ -69,6 +69,7 @@ export const mutations = {
             scan_subdir: false,
             prependFullPath: false,
             enableQueueScanner: false,
+            readSFOHeader: false,
         }
 
         state.ps4 = {
@@ -162,6 +163,10 @@ export const getters = {
 
   getPrefixFullPath(state){
       return state.server.prependFullPath
+  },
+
+  getReadSFOHeader(state){
+        return state.server.readSFOHeader
   },
 
   getStyle(state){

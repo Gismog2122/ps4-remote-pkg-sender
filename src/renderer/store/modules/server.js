@@ -32,7 +32,7 @@ export const mutations = {
 export const actions = {
     ...make.actions(state),
 
-    loadFiles({ commit, state, rootState, rootGetters }, path){
+    async loadFiles({ commit, state, rootState, rootGetters }, path){
         if(!path){
             console.log("::store | no path given for base_path")
             return
@@ -41,9 +41,10 @@ export const actions = {
         // commit('loading', true)
         console.log("::store | Read files at base path ", path);
         let scan_subdir = rootGetters['app/server'].scan_subdir
-        let files = fs.getFilesFromBasePath(path, scan_subdir)
+        let files = await fs.getFilesFromBasePath(path, scan_subdir)
 
-        // console.log("::store | patched files", files)
+        console.log("::store | patched files", files.length)
+        console.log(files)
         commit('serverFiles', files)
         // commit('loading', false)
     },
