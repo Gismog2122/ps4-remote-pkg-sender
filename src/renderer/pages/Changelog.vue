@@ -4,7 +4,20 @@
   <h2 style="margin-bottom: 20px;">You are on version {{ $root.versions.app }}</h2>
 
   <el-timeline>
-    <el-timeline-item timestamp="2.10.3" placement="top">
+    <el-timeline-item timestamp="2.11.0" placement="top">
+        <h4>Cooperation with GoldHEN </h4>
+        <p>
+        Working with Sistro on a GoldHEN implemented/integrated way of handling PKG Installations. <br>
+        Added Dedicated Menu Options in Config for SFO Reader and enabling GoldHEN as target app. <br>
+        Refactoring the file traverse method to optimize large file reads operations. <br>
+        Add SFO Reader for detailed Information about the PKGs. <br>
+        Outsource the Icon0.png extraction on the Serverside. <br>
+        Patch Server generated files structure to match the new file structure. <br>
+        Optimize the persistent Storage settings to eliminate overhead. <br>
+
+        </p>
+    </el-timeline-item>      
+    <el-timeline-item timestamp="2.10.4" placement="top">
         <h4>macOS 14.4+ fixes</h4>
         <p>
         The latest mac OS Version 14.4+ has a couple dependency changes that break the application.  <br>
