@@ -52,6 +52,7 @@ The refactored Version provides a better GUI and technicall more ordered feature
 - [x] SFO Header Reader Implementation (WIP v2.11+)
 - [x] Preview Game title covers   (WIP v2.11+)
 - [x] Read CUSA from file hex values instead of title  (WIP v2.11+)
+- [x] Install via GoldHEN embedded RPI (WIP v2.11+)
 - [ ] Context Menu on Processing Center  
 - [ ] Group PKG's by TitleID and Type (Base, Update, DLC)  
 - [ ] One click to install all Group based PKG (send all PKGs from TitleID X)  
