@@ -142,32 +142,12 @@ let o = {
         let searchCUSA = fileName.match(/(CUSA\d{5})/i)
         let cusa = searchCUSA ? searchCUSA[0].toUpperCase() : ''
 
-        // #todo get pkg deep info with https://github.com/dexter85/ps4-pkg-info
-        let sfoKeys = ['APP_TYPE', 'APP_VER', 'ATTRIBUTE', 'ATTRIBUTE2', 'CATEGORY', 'CONTENT_ID', 'PUBTOOLINFO', 'PUBTOOLMINVER', 'PUBTOOLVER', 'SYSTEM_VER', 'TITLE', 'TITLE_ID', 'VERSION']
+        // #todo get pkg deep info with https://github.com/dexter85/ps4-pkg-info        
         let sfo = { readSFOHeader }
-        let image = null
 
         if( readSFOHeader ){
-            try {
-                let s = await getPs4PkgInfo(item, { generateBase64Icon: false })
-                    .catch( e => {
-                        console.error("Error in PKG Extraction: "+ e + '; File: ' + fileName)
-                    })            
-
-                if( s ){
-                    // console.log("Found sfo header for " + fileName)
-                    // image = s.icon0Raw
-                    cusa  = s.paramSfo.TITLE_ID
-                    sfoKeys.forEach( x => sfo[x] = s.paramSfo[x] )            
-                    
-                    // image = `data:image/png;base64,` + s.icon0Raw.toString('base64')
-                    // console.log(item, s.paramSfo)
-                    // console.log(image)                
-                }
-            }
-            catch (e){
-                console.error(e)
-            }
+            sfo = await this.getItemSFO(item)
+            cusa  = sfo.TITLE_ID            
         }
 
         // title location 0x40 to 0x63
@@ -190,7 +170,7 @@ let o = {
             size,
             logs: [],
             sfo,
-            image,
+            image: null
             // stats,
         }
 
@@ -289,12 +269,22 @@ let o = {
         }
     },
 
-    createItemFromDraggedFile(draggedFilePath){
+    async createItemFromDraggedFile(draggedFilePath){
+        const readSFOHeader = store.getters['app/getReadSFOHeader']        
+        
         let name            = path.basename(draggedFilePath)
         let patchedFilename = name.replace(/[^a-zA-Z0-9-_.]/g, '')
         let size            = this.getFileSize(draggedFilePath, 2, true)
         let searchCUSA      = name.match(/(CUSA\d{5})/i)
-        let cusa            = searchCUSA ? searchCUSA[0].toUpperCase() : ''        
+        let cusa            = searchCUSA ? searchCUSA[0].toUpperCase() : ''      
+        
+        let sfo = { readSFOHeader }
+
+        if( readSFOHeader ){
+            sfo = await this.getItemSFO(draggedFilePath)
+            cusa  = sfo.TITLE_ID
+            console.log("found in callback", sfo)
+        }        
         
         return {
             name,
@@ -312,8 +302,38 @@ let o = {
             sizeInBytes: size,
             size: this.formatBytes(size, 2),
             logs: [],
+            sfo,
+            image: null,
             // stats,
         }
+    },
+
+    async getItemSFO(item, keys=[]){
+        let sfoKeys = ['APP_TYPE', 'APP_VER', 'ATTRIBUTE', 'ATTRIBUTE2', 'CATEGORY', 'CONTENT_ID', 'PUBTOOLINFO', 'PUBTOOLMINVER', 'PUBTOOLVER', 'SYSTEM_VER', 'TITLE', 'TITLE_ID', 'VERSION']
+        let sfo = { readSFOHeader: true }
+
+        try {
+            let s = await getPs4PkgInfo(item, { generateBase64Icon: false })
+                .catch( e => {
+                    console.error("Error in PKG Extraction: "+ e)
+                })            
+
+            if( s ){
+                // console.log("Found sfo header for " + fileName)
+                // image = s.icon0Raw                
+                sfoKeys.forEach( x => sfo[x] = s.paramSfo[x] )                 
+            }
+            else {
+                console.log("Hops, no s object for sfo information")
+            }
+        }
+        catch (e){
+            console.error(e)
+            return sfo
+        }
+        
+        console.log("read in getItemSFO", sfo)
+        return sfo
     },
 
     formatBytes(bytes=null, decimals=2, k=1000) {

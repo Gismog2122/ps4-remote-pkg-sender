@@ -73,23 +73,33 @@
 
             <div style='height: 10px' />
 
-            <el-tag size="small" type="info" style="margin-bottom: 5px"> File Name: {{ scope.row.name }} </el-tag> <br>
-            <el-tag size="small" type="info" style="margin-bottom: 5px"> Patched Name: {{ scope.row.patchedFilename }} </el-tag> <br>
-            <el-tag size="small" type="info" style="margin-bottom: 5px"> Path: {{ scope.row.path }} </el-tag> <br>
-            <el-tag size="small" type="info" style="margin-bottom: 5px"> URL: {{ scope.row.url }} </el-tag> <br>
+            <el-tag size="small" type="info" style="margin-bottom: 3px"> File Name: {{ scope.row.name }} </el-tag> <br>
+            <el-tag size="small" type="info" style="margin-bottom: 3px"> Patched Name: {{ scope.row.patchedFilename }} </el-tag> <br>
+            <el-tag size="small" type="info" style="margin-bottom: 3px"> Path: {{ scope.row.path }} </el-tag> <br>
+            <el-tag size="small" type="info" style="margin-bottom: 3px"> PKG URL: {{ scope.row.url }} </el-tag> <br>
+            <el-tag size="small" type="info" style="margin-bottom: 3px"> Icon0 URL: {{ scope.row.image }} </el-tag> <br>
 
 
             <pre v-if="showDebugInRow">{{ scope.row }}</pre>
         </template>
     </el-table-column>
 
-        <el-table-column label="Cover" width="100">
-            <template slot-scope="scope">
-                <div class='image' :style="{ backgroundImage: 'url('+scope.row.image+')' }" />
-            </template>
-        </el-table-column>        
+    <el-table-column label="Cover" width="100" v-if="sfoEnabled">
+        <template slot-scope="scope">
+            <div class='image' :style="{ backgroundImage: 'url('+scope.row.image+')' }" />
+        </template>
+    </el-table-column>        
 
-    <el-table-column prop="name" label="Name"></el-table-column>
+    <el-table-column prop="name" label="Name">
+        <template slot-scope="scope">
+            {{ scope.row.name }} <small v-if="scope.row.sfo?.readSFOHeader">(v{{ scope.row.sfo.APP_VER}})</small>
+            <el-tag size="small" :type="$helper.getAppStoreType(scope.row.sfo.CATEGORY)" style="margin-left: 10px; margin-bottom: 3px;" v-if="scope.row.sfo?.readSFOHeader">{{ scope.row.sfo.CATEGORY }}</el-tag>
+            
+            <div v-if="scope.row.sfo?.readSFOHeader">                
+                <el-tag size="small" type="info"> {{ scope.row.sfo.CONTENT_ID}} </el-tag>
+            </div>
+        </template>
+    </el-table-column>
 
     <el-table-column label="Ext" width="100" v-if="showExtension">
         <template slot-scope="scope">
@@ -190,6 +200,7 @@ export default {
         queueScanner: get('app/server.enableQueueScanner'),
         notify: get('app/config.enableSystemNotifications'),
         isPS5: get('app/isPS5'),
+        sfoEnabled: get('app/getReadSFOHeader'),
         files(){ 
             let search = this.search.toLowerCase()
 

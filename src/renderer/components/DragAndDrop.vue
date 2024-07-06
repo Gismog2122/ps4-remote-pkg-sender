@@ -75,8 +75,9 @@ export default {
     },
 
     methods: {
-        addFiles(){
+        async addFiles(){
             let filesAsItems = this.files.map( file => this.$fs.createItemFromDraggedFile(file) )
+                filesAsItems = await Promise.all(filesAsItems)
 
             // patch for unique items and remove duplicates
             let pathMap = new Map()
