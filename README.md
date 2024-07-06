@@ -43,42 +43,48 @@ The refactored Version provides a better GUI and technicall more ordered feature
 - [x] Scroll To Top  
 - [x] Auto update checker for latest release version 
 - [x] Bulk Action for adding to Queue
-- [x] Drag & Drop files and folders 
-- [x] RPSV2 API Service for dynamic configurations
-- [x] Add PS5 Support  
-- [x] Add Queue Scanner Bulk Request Support for PS5  
 
 ## ToDo's for the future (Comming into v2.10+)
+- [x] Drag & Drop files and folders 
+- [x] RPSV2 API Service for dynamic configurations
+- [x] Add PS5 Support (v2.10.4)
+- [x] Add Queue Scanner Bulk Request Support for PS5  (v2.10.4)
+- [x] SFO Header Reader Implementation (WIP v2.11+)
+- [x] Preview Game title covers   (WIP v2.11+)
+- [x] Read CUSA from file hex values instead of title  (WIP v2.11+)
+- [ ] Context Menu on Processing Center  
+- [ ] Group PKG's by TitleID and Type (Base, Update, DLC)  
+- [ ] One click to install all Group based PKG (send all PKGs from TitleID X)  
 - [ ] Add Translations though RPSV2 API
+
 - [ ] Search your PS4 automatically in the current network  
 - [ ] Implement Auto-updater  
 - [ ] Import / Export Configuration  
 - [ ] Serve as global Server Host and provide Server Files over Internet   
 - [ ] Show files from Hosts / Users
 - [ ] Save PS4 (local, wlan, wan, internet) and make them chooseable  
-- [ ] Read CUSA from file hex values instead of title  
-- [ ] Preview CUSAxxxxx Game title covers  
 - [ ] Chrome Extension for external usage  
 - [ ] GoldHen Cheats Manager  
 - [ ] Integrated FTP Client  
-- [ ] Context Menu on Processing Center  
-- [ ] Group PKG's by TitleID and Type (Base, Update, DLC)  
-- [ ] One click to install all Group based PKG (send all PKGs from TitleID X)  
 
 ## How To  
 So there you have it. How can you use it?  
 
 ### on PS4
-1.) Start HEN v1.8+  
+```
+1.) Start HEN v1.8+ / latest GoldHEN
 2.) Start flatZ Remote Package Installer  
+```
 
 ### on PC  
+```
 1.) Start PS4 Package Sender V2   
 2.) Switch to Config and select your Networkinterface (IP Adress)  
     2.1) Choose a Server Port if necessary and apply or restart the server  
 3.) Choose your base path where your files are settled  
 4.) Switch to Server and add your files to the queue (Processing Center)  
 5.) Start your install process with any of your files.  
+```
 
 ## Troubleshooting  
 Your PS4 and PC have to be on the same Network.  
