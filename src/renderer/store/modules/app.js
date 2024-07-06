@@ -113,28 +113,29 @@ export const actions = {
     ...make.actions(state),
 
     addTime( { state, commit }){
-      commit('addTime')
+        commit('addTime')
     },
 
     started({commit}){
-      commit('addStarted')
+        commit('addStarted')
     },
 
     reset({ commit }){
-      commit('resetServer')
+        commit('resetServer')
     },
 
     save({ commit }){
-      commit('saveServer')
+        commit('saveServer')
     },
 
     resetConfig({ commit }){
-      commit('resetConfig')
+        commit('resetConfig')
     },
 
     toggleQueueScanner({ commit }){
         commit('toggleQueueScanner')
     }
+
     // addFiles({ commit, dispatch, state}, payload){
     //     commit('addFiles', payload)
     // }
@@ -142,39 +143,43 @@ export const actions = {
 
 // getters
 export const getters = {
-  // make all getters (optional)
-  ...make.getters(state),
+    // make all getters (optional)
+    ...make.getters(state),
 
-  isPS5(state){
-        return state.ps4.app == 'etaHEN'
-  },
+    isPS5(state){
+            return state.ps4.app == 'etaHEN'
+    },
 
-  getPS4IP(state){
-      return state.ps4.ip + ':' + state.ps4.port
-  },
+    getPS4TargetApp(state){
+        return state.ps4.app
+    },
 
-  getPS4Timeout(state){
-      return state.ps4.timeout
-  },
+    getPS4IP(state){
+        return state.ps4.ip + ':' + state.ps4.port
+    },
 
-  getServerIP(state){
-      return state.server.ip + ':' + state.server.port
-  },
+    getPS4Timeout(state){
+        return state.ps4.timeout
+    },
 
-  getPrefixFullPath(state){
-      return state.server.prependFullPath
-  },
+    getServerIP(state){
+        return state.server.ip + ':' + state.server.port
+    },
 
-  getReadSFOHeader(state){
-        return state.server.readSFOHeader
-  },
+    getPrefixFullPath(state){
+        return state.server.prependFullPath
+    },
 
-  getStyle(state){
-      return state.config.style
-  }
+    getReadSFOHeader(state){
+            return state.server.readSFOHeader
+    },
 
-  // overwrite default `items` getter
-  // allFiles: state => {
-  //     return state.images
-  // },
+    getStyle(state){
+        return state.config.style
+    }
+
+    // overwrite default `items` getter
+    // allFiles: state => {
+    //     return state.images
+    // },
 }

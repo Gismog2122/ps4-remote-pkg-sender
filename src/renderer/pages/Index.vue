@@ -201,6 +201,7 @@ export default {
         notify: get('app/config.enableSystemNotifications'),
         isPS5: get('app/isPS5'),
         sfoEnabled: get('app/getReadSFOHeader'),
+        getPS4TargetApp: get('app/getPS4TargetApp'),
         files(){ 
             let search = this.search.toLowerCase()
 
@@ -332,6 +333,21 @@ export default {
                         this.$message({ message: e, type: 'error' })
                     })            
             }          
+
+            // ps4 simple goldhen
+            if( this.getPS4TargetApp == 'goldhen' ){
+                console.log("GoldHEN Install request")
+                return this.$ps4_goldhen.install(file)
+                    .then( data => {
+                        console.log("GodlHEN Request Done. Check response")
+                        console.log(data)
+                        this.log(data)
+                    })
+                    .catch( e => {
+                        console.error("GoldHEN Error")
+                        console.log(e)
+                    })
+            }
 
             // ps4 version
             if(file.task && ['pause', 'stop'].includes(file.status) ){

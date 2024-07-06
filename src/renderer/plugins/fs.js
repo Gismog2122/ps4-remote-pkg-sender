@@ -283,7 +283,6 @@ let o = {
         if( readSFOHeader ){
             sfo = await this.getItemSFO(draggedFilePath)
             cusa  = sfo.TITLE_ID
-            console.log("found in callback", sfo)
         }        
         
         return {
@@ -332,7 +331,6 @@ let o = {
             return sfo
         }
         
-        console.log("read in getItemSFO", sfo)
         return sfo
     },
 
