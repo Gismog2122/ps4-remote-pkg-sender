@@ -1,7 +1,7 @@
 # PS4 Remote PKG Sender v2  
 [![ko-fi](https://img.shields.io/badge/Buy%20me%20a%20Shisha%20on-Ko--fi-red)](https://ko-fi.com/M4M082WK8)
 [![os](https://img.shields.io/badge/platform-windows%20%7C%20macos%20%7C%20linux-lightgrey)](https://github.com/Gkiokan/ps4-remote-pkg-sender)
-[![commits_since_release](https://img.shields.io/github/commits-since/gkiokan/ps4-remote-pkg-sender/v2.8.0)](https://github.com/Gkiokan/ps4-remote-pkg-sender/releases)
+[![commits_since_release](https://img.shields.io/github/commits-since/gkiokan/ps4-remote-pkg-sender/v2.10.4)](https://github.com/Gkiokan/ps4-remote-pkg-sender/releases)
 [![version](https://img.shields.io/github/package-json/v/gkiokan/ps4-remote-pkg-sender)](https://github.com/Gkiokan/ps4-remote-pkg-sender/releases)  
 [![downloads](https://img.shields.io/github/downloads/gkiokan/ps4-remote-pkg-sender/total)](https://github.com/Gkiokan/ps4-remote-pkg-sender/releases)
 [![last_commit](https://img.shields.io/github/last-commit/gkiokan/ps4-remote-pkg-sender)](https://github.com/Gkiokan/ps4-remote-pkg-sender)
@@ -56,7 +56,6 @@ The refactored Version provides a better GUI and technicall more ordered feature
 - [ ] Group PKG's by TitleID and Type (Base, Update, DLC)  
 - [ ] One click to install all Group based PKG (send all PKGs from TitleID X)  
 - [ ] Add Translations though RPSV2 API
-
 - [ ] Search your PS4 automatically in the current network  
 - [ ] Implement Auto-updater  
 - [ ] Import / Export Configuration  
@@ -71,20 +70,16 @@ The refactored Version provides a better GUI and technicall more ordered feature
 So there you have it. How can you use it?  
 
 ### on PS4
-```
 1.) Start HEN v1.8+ / latest GoldHEN
 2.) Start flatZ Remote Package Installer  
-```
 
 ### on PC  
-```
 1.) Start PS4 Package Sender V2   
 2.) Switch to Config and select your Networkinterface (IP Adress)  
     2.1) Choose a Server Port if necessary and apply or restart the server  
 3.) Choose your base path where your files are settled  
 4.) Switch to Server and add your files to the queue (Processing Center)  
 5.) Start your install process with any of your files.  
-```
 
 ## Troubleshooting  
 Your PS4 and PC have to be on the same Network.  
