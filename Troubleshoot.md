@@ -65,8 +65,11 @@ Those Error Codes are not documented yet but I've patched the known ones which a
 `2157510681` Task doesn't exist -> RPI can't find any task associated with the id  
 `2157510663` already installed  -> the app you are trying to install is already installed, delete the copy on your PS4 first and try again  
 `2157510677` App seems to be installed already (duplicate?)  -> Delete the app and any app chunks that are on your PS4 first and try again  
-`2157510789` not enough storage  
-`2157510920` not known yet  
+`2157510789` Not enough storage  
+`2157510920` Not known yet  
+`2143223530` Ethernet/WiFi Connection Issue
+
+
 
 ## Unable to set up prerequisites for package  
 Thanks to marcussacana we could debug this error down.
